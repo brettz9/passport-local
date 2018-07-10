@@ -34,9 +34,9 @@
     "@passport-next/passport-strategy": "1.1.x"
   },
   "devDependencies": {
-    "chai": "4.x.x",
+    "chai": "4.1.x",
     "chai-passport-strategy": "1.x.x",
-    "mocha": "5.x.x"
+    "mocha": "5.2.x"
   },
   "engines": {
     "node": ">=6"
