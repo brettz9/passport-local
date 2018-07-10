@@ -68,7 +68,7 @@ describe('Strategy', function() {
     var status;
 
     before(function(done) {
-      chai.passport(strategy)
+      chai.passport.use(strategy)
         .fail(function(i, s) {
           status = s;
           done();
