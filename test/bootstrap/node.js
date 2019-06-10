@@ -1,4 +1,5 @@
-var chai = require('chai');
+'use strict';
+const chai = require('chai');
 
 chai.use(require('chai-passport-strategy'));
 

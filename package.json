@@ -15,33 +15,57 @@
     "name": "Rowan Wookey",
     "email": "admin@rwky.net"
   },
+  "contributors": [
+    "Brett Zamir"
+  ],
   "repository": {
     "type": "git",
     "url": "git://github.com/passport-next/passport-local.git"
   },
   "bugs": {
-    "url": "http://github.com/passport-next/passport-local/issues"
+    "url": "https://github.com/passport-next/passport-local/issues"
   },
   "license": "MIT",
-  "licenses": [
-    {
-      "type": "MIT",
-      "url": "http://www.opensource.org/licenses/MIT"
-    }
-  ],
+  "homepage": "https://github.com/passport-next/passport-local",
   "main": "./lib",
   "dependencies": {
     "@passport-next/passport-strategy": "1.1.x"
   },
   "devDependencies": {
-    "chai": "4.1.x",
+    "@mysticatea/eslint-plugin": "^13.0.0",
+    "chai": "4.2.x",
     "chai-passport-strategy": "1.x.x",
-    "mocha": "5.2.x"
+    "eslint": "^6.8.0",
+    "eslint-config-ash-nazg": "^16.5.0",
+    "eslint-config-standard": "^14.1.0",
+    "eslint-plugin-array-func": "^3.1.3",
+    "eslint-plugin-compat": "^3.3.0",
+    "eslint-plugin-eslint-comments": "^3.1.2",
+    "eslint-plugin-html": "^6.0.0",
+    "eslint-plugin-import": "^2.20.0",
+    "eslint-plugin-jsdoc": "^20.3.0",
+    "eslint-plugin-markdown": "^1.0.1",
+    "eslint-plugin-no-unsanitized": "^3.0.2",
+    "eslint-plugin-no-use-extend-native": "^0.4.1",
+    "eslint-plugin-node": "^11.0.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-sonarjs": "^0.5.0",
+    "eslint-plugin-standard": "^4.0.1",
+    "eslint-plugin-unicorn": "^15.0.1",
+    "jsdoc": "^3.6.3",
+    "mocha": "7.0.x",
+    "node-static": "^0.7.11",
+    "open-cli": "^5.0.0",
+    "typescript": "^3.7.4"
   },
   "engines": {
-    "node": ">=6"
+    "node": ">=8.0.0"
   },
   "scripts": {
-    "test": "node_modules/.bin/mocha --reporter spec --require test/bootstrap/node test/*.test.js"
+    "start": "static -p 8004",
+    "build-docs": "rm -rf docs/jsdoc/*;jsdoc --pedantic -c docs/jsdoc-config.js lib",
+    "open-docs": "open-cli http://localhost:8004/docs/jsdoc/ && npm start",
+    "lint": "eslint --ext=js,md,html .",
+    "test": "mocha --reporter spec --require test/bootstrap/node test/*.test.js"
   }
 }

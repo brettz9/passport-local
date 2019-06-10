@@ -19,7 +19,7 @@ unobtrusively integrated into any application or framework that supports
 ## Install
 
 ```bash
-$ npm install @passport-next/passport-local
+npm install @passport-next/passport-local
 ```
 
 ## Usage
@@ -28,20 +28,24 @@ $ npm install @passport-next/passport-local
 
 The local authentication strategy authenticates users using a username and
 password.  The strategy requires a `verify` callback, which accepts these
-credentials and calls `done` providing a user.
+credentials and resolves to a user (or throws or returns `false`).
 
 ```js
-passport = require('passport');
-LocalStrategy = require('passport-local').Strategy;
+const passport = require('@passport-next/passport');
+const LocalStrategy = require('@passport-next/passport-local').Strategy;
 
 passport.use(new LocalStrategy(
-  function(username, password, done) {
-    User.findOne({ username: username }, function (err, user) {
-      if (err) { return done(err); }
-      if (!user) { return done(null, false); }
-      if (!user.verifyPassword(password)) { return done(null, false); }
-      return done(null, user);
-    });
+  async function (username, password) {
+    let user;
+    try {
+      user = await User.findOne({username});
+    } catch (err) {
+      throw err;
+    }
+    if (!user || !user.verifyPassword(password)) {
+      return false;
+    }
+    return user;
   }
 ));
 ```
@@ -60,18 +64,19 @@ Both fields define the name of the properties in the POST body that are sent to 
 #### Parameters
 
 By default, `LocalStrategy` expects to find credentials in parameters
-named username and password. If your site prefers to name these fields
+named `username` and `password`. If your site prefers to name these fields
 differently, options are available to change the defaults.
 
 ```js
-passport.use(new LocalStrategy({
+passport.use(
+  new LocalStrategy({
     usernameField: 'email',
-    passwordField: 'passwd',
+    passwordField: 'passwd'
   },
-  function(username, password, done) {
+  function (username, password, done) {
     // ...
-  }
-));
+  })
+);
 ```
 
 The verify callback can be supplied with the `request` object by setting
@@ -79,16 +84,17 @@ the `passReqToCallback` option to true, and changing callback arguments
 accordingly.
 
 ```js
-passport.use(new LocalStrategy({
+passport.use(
+  new LocalStrategy({
     usernameField: 'email',
     passwordField: 'passwd',
-    passReqToCallback: true,
+    passReqToCallback: true
   },
-  function(req, username, password, done) {
+  function (req, username, password, done) {
     // request object is now first argument
     // ...
-  }
-));
+  })
+);
 ```
 
 #### Authenticate Requests
@@ -102,12 +108,14 @@ For example, as route middleware in an [Express](http://expressjs.com/)
 application:
 
 ```js
-app.use(require('body-parser').urlencoded({ extended: true }));
+const bodyParser = require('body-parser');
+
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(passport.initialize());
 
-app.post('/login', 
-  passport.authenticate('local', { failureRedirect: '/login' }),
-  function(req, res) {
+app.post('/login',
+  passport.authenticate('local', {failureRedirect: '/login'}),
+  function (req, res) {
     res.redirect('/');
   });
 ```
@@ -123,6 +131,6 @@ Additional examples can be found on the [wiki](https://github.com/jaredhanson/pa
 ## Tests
 
 ```bash
-$ npm install
-$ npm test
+npm install
+npm test
 ```
