@@ -1,23 +1,13 @@
-Makefile
-README.md
-build/
+CONTRIBUTING.md
 docs/
-examples/
-reports/
-support/
-test/
-
-# Node.js
-.npmignore
-node_modules/
-npm-debug.log
-
-# Mac OS X
 .DS_Store
-
-# Git
-.git*
-
-# Utilities
-.jshintrc
+.eslintignore
+.eslintrc.js
+examples/
+.github/
+.gitlab-ci.yml
+.nyc_output
+templates
+test/
 .travis.yml
+var/
