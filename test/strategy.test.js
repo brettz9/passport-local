@@ -1,20 +1,19 @@
 /* global describe, it, expect */
+'use strict';
 
-var Strategy = require('../lib/strategy');
+const Strategy = require('../lib/strategy');
 
 
-describe('Strategy', function() {
-    
-  var strategy = new Strategy(function(){});
-    
-  it('should be named local', function() {
+describe('Strategy', () => {
+  const strategy = new Strategy(() => {});
+
+  it('should be named local', () => {
     expect(strategy.name).to.equal('local');
   });
-  
-  it('should throw if constructed without a verify callback', function() {
-    expect(function() {
-      var s = new Strategy();
+
+  it('should throw if constructed without a verify callback', () => {
+    expect(() => {
+      Strategy();
     }).to.throw(TypeError, 'LocalStrategy requires a verify callback');
   });
-  
 });

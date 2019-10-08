@@ -1,5 +1,5 @@
-var chai = require('chai');
+'use strict';
 
-chai.use(require('chai-passport-strategy'));
+const chai = require('chai');
 
 global.expect = chai.expect;
