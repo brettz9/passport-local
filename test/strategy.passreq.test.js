@@ -52,4 +52,55 @@ describe('Strategy', function () {
       expect(info.foo).to.equal('hello');
     });
   });
+
+  describe('passing request to verify callback (async)', function () {
+    this.timeout(10000);
+    const strategy = new Strategy({
+      passReqToCallback: true
+    // eslint-disable-next-line require-await -- Testing only
+    }, async function (req, username, password) {
+      if (username === 'johndoe' && password === 'secret') {
+        return {
+          user: {id: '1234'},
+          info: {scope: 'read', foo: req.headers['x-foo']}
+        };
+      }
+      return {
+        user: false
+      };
+    });
+
+    let user, info;
+
+    before(function (done) {
+      chai.passport.use(strategy)
+        .success(function (u, i) {
+          user = u;
+          info = i;
+          done();
+        })
+        .req(function (req) {
+          req.headers['x-foo'] = 'hello';
+
+          req.body = {};
+          req.body.username = 'johndoe';
+          req.body.password = 'secret';
+        })
+        .authenticate();
+    });
+
+    it('should supply user', function () {
+      expect(user).to.be.an('object');
+      expect(user.id).to.equal('1234');
+    });
+
+    it('should supply info', function () {
+      expect(info).to.be.an('object');
+      expect(info.scope).to.equal('read');
+    });
+
+    it('should supply request header in info', function () {
+      expect(info.foo).to.equal('hello');
+    });
+  });
 });

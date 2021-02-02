@@ -43,9 +43,9 @@ passport.use(new LocalStrategy(
       throw err;
     }
     if (!user || !user.verifyPassword(password)) {
-      return false;
+      return {user: false};
     }
-    return user;
+    return {user};
   }
 ));
 ```
