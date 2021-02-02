@@ -129,6 +129,35 @@ describe('Strategy', function () {
     });
   });
 
+  describe('handling a request with a body, but a bad username', function () {
+    const strategy = new Strategy(function (username, password, done) {
+      throw new Error('should not be called');
+    });
+
+    let info, status;
+
+    before(function (done) {
+      chai.passport.use(strategy)
+        .fail(function (i, s) {
+          info = i;
+          status = s;
+          done();
+        })
+        .req(function (req) {
+          req.body = {
+            username: {}
+          };
+        })
+        .authenticate();
+    });
+
+    it('should fail with info and status', function () {
+      expect(info).to.be.an('object');
+      expect(info.message).to.equal('Missing credentials');
+      expect(status).to.equal(400);
+    });
+  });
+
   describe('handling a request with a body, but no password', function () {
     const strategy = new Strategy(function (username, password, done) {
       throw new Error('should not be called');
