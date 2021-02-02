@@ -36,7 +36,7 @@
     "chai": "4.2.x",
     "chai-passport-strategy": "1.x.x",
     "eslint": "^7.19.0",
-    "eslint-config-ash-nazg": "^26.0.0",
+    "eslint-config-ash-nazg": "^26.1.0",
     "eslint-config-standard": "^16.0.2",
     "eslint-plugin-array-func": "^3.1.7",
     "eslint-plugin-chai-friendly": "^0.6.0",
