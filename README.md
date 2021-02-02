@@ -6,7 +6,6 @@
 [![Dependencies](https://david-dm.org/passport-next/passport-local.png)](https://david-dm.org/passport-next/passport-local)
 <!--[![SAST](https://gitlab.com/passport-next/passport-local/badges/master/build.svg)](https://gitlab.com/passport-next/passport-local/badges/master/build.svg)-->
 
-
 [Passport](http://passportjs.org/) strategy for authenticating with a username
 and password.
 
@@ -40,6 +39,7 @@ passport.use(new LocalStrategy(
     try {
       user = await User.findOne({username});
     } catch (err) {
+      console.log(err);
       throw err;
     }
     if (!user || !user.verifyPassword(password)) {

@@ -27,7 +27,6 @@ describe('Strategy', function () {
     });
 
     it('should fail', function () {
-      // eslint-disable-next-line no-unused-expressions
       expect(info).to.be.undefined;
     });
   });
