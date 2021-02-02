@@ -56,6 +56,7 @@
     "jsdoc": "^3.6.6",
     "mocha": "8.2.x",
     "node-static": "^0.7.11",
+    "nyc": "^15.1.0",
     "open-cli": "^6.0.1",
     "typescript": "^4.1.3"
   },
@@ -67,6 +68,7 @@
     "build-docs": "rm -rf docs/jsdoc/*;jsdoc --pedantic -c docs/jsdoc-config.js lib",
     "open-docs": "open-cli http://localhost:8004/docs/jsdoc/ && npm start",
     "lint": "eslint --ext=js,md,html .",
-    "test": "mocha --reporter spec --require test/bootstrap/node test/*.test.js"
+    "mocha": "mocha --reporter spec --require test/bootstrap/node test/*.test.js",
+    "test": "nyc npm run mocha"
   }
 }
