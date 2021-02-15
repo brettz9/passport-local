@@ -1,23 +1,22 @@
 Makefile
-README.md
 build/
+CONTRIBUTING.md
 docs/
+.eslintignore
+.eslintrc.js
 examples/
 reports/
 support/
+.github/
+.gitlab-ci.yml
+.nyc_output
+templates
 test/
+.travis.yml
+var/
 
 # Node.js
-.npmignore
-node_modules/
 npm-debug.log
 
 # Mac OS X
 .DS_Store
-
-# Git
-.git*
-
-# Utilities
-.jshintrc
-.travis.yml

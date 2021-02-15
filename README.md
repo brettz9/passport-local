@@ -1,13 +1,14 @@
-# passport-local
+# Passport-Next/Passport-Local
 
+Status:
+[![NPM version](https://img.shields.io/npm/v/@passport-next/passport-local.svg)](https://www.npmjs.com/package/@passport-next/passport-local)
 [![Build Status](https://travis-ci.org/passport-next/passport-local.svg?branch=master)](https://travis-ci.org/passport-next/passport-local)
 [![Coverage Status](https://coveralls.io/repos/github/passport-next/passport-local/badge.svg?branch=master)](https://coveralls.io/github/passport-next/passport-local?branch=master)
 [![Maintainability](https://api.codeclimate.com/v1/badges/b7ff64d57f9f816260a3/maintainability)](https://codeclimate.com/github/passport-next/passport-local/maintainability)
 [![Dependencies](https://david-dm.org/passport-next/passport-local.png)](https://david-dm.org/passport-next/passport-local)
-<!--[![SAST](https://gitlab.com/passport-next/passport-local/badges/master/build.svg)](https://gitlab.com/passport-next/passport-local/badges/master/build.svg)-->
+[![SAST](https://gitlab.com/passport-next/passport-local/badges/master/pipeline.svg)](https://gitlab.com/passport-next/passport-local)
 
-[Passport](http://passportjs.org/) strategy for authenticating with a username
-and password.
+## About
 
 This module lets you authenticate using a username and password in your Node.js
 applications.  By plugging into Passport, local authentication can be easily and
@@ -97,8 +98,6 @@ passport.use(
 );
 ```
 
-#### Authenticate Requests
-
 Use `passport.authenticate()`, specifying the `'local'` strategy, to
 authenticate requests. It searches for fields in the query string and
 `req.body`, so ensure body parsers are in place if these fields are
@@ -126,9 +125,21 @@ Developers using the popular [Express](http://expressjs.com/) web framework can
 refer to an [example](https://github.com/passport/express-4.x-local-example)
 as a starting point for their own web applications.
 
-Additional examples can be found on the [wiki](https://github.com/jaredhanson/passport-local/wiki/Examples).
+## Docs
 
-## Tests
+[Please see the wiki](https://github.com/passport-next/passport-local/wiki)
+
+## Need help?
+
+Please raise an [issue](https://github.com/passport-next/passport-local/issues) and/or ask a question on [Stackoverflow](https://stackoverflow.com) with the `passport.js` tag.
+
+## Support policy
+
+We support all [node versions](https://github.com/nodejs/Release) supported by the Node Foundation.
+
+## Contributing
+
+Please see [CONTRIBUTING.md](https://github.com/passport-next/passport-local/blob/master/CONTRIBUTING.md).
 
 ```bash
 npm install

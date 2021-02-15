@@ -1,0 +1,67 @@
+{
+  "name": "{{npmModule}}",
+  "version": "1.0.0",
+  "description": "{{description}}",
+  "author": {
+    "name": "Passport Next Developers",
+    "url": "https://github.com/orgs/passport-next/people"
+  },
+  "homepage": "{{github}}",
+  "contributors": [],
+  "bugs": {
+    "url": "{{github}}/issues"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+    "@brettz9/eslint-plugin": "^1.0.3",
+    "@passport-next/chai-connect-middleware": "1.x.x",
+    "@passport-next/chai-passport-strategy": "1.x.x",
+    "@passport-next/eslint-config-passport-next": "^2.0.0",
+    "chai": "4.x.x",
+    "coveralls": "^3.0.6",
+    "eslint": "^7.20.0",
+    "eslint-config-standard": "^16.0.2",
+    "eslint-plugin-array-func": "^3.1.7",
+    "eslint-plugin-compat": "^3.9.0",
+    "eslint-plugin-eslint-comments": "^3.2.0",
+    "eslint-plugin-html": "^6.1.1",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsdoc": "^32.0.0",
+    "eslint-plugin-markdown": "^2.0.0",
+    "eslint-plugin-no-use-extend-native": "^3.1.4",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.3.1",
+    "eslint-plugin-radar": "^0.2.1",
+    "eslint-plugin-standard": "^4.1.0",
+    "eslint-plugin-unicorn": "^28.0.0",
+    "mocha": "8.x.x",
+    "nunjucks": "^3.2.2",
+    "nyc": "^15.1.0"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "keywords": [
+    "express",
+    "connect",
+    "auth",
+    "authn",
+    "authentication"
+  ],
+  "license": "MIT",
+  "main": "./lib",
+  "repository": {
+    "type": "git",
+    "url": "{{github}}"
+  },
+  "scripts": {
+    "templates": "node ./templates/gen.js",
+    "init-new-project": "node ./templates/gen --init",
+    "lint": "eslint --max-warnings 0 --ext js,md .",
+    "lintfix": "eslint --ext js,md . --fix",
+    "testonly": "mocha --reporter spec --require test/bootstrap/node test/*.test.js test/**/*.test.js",
+    "test": "nyc --report-dir=var/coverage --reporter=lcov --reporter=text npm run testonly",
+    "coveralls": "nyc report --report-dir=var/coverage --reporter=text-lcov | coveralls"
+  }
+}

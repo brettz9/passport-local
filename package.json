@@ -1,8 +1,10 @@
 {
   "name": "@passport-next/passport-local",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Local username and password authentication strategy for Passport.",
   "keywords": [
+    "express",
+    "connect",
     "passport",
     "local",
     "auth",
@@ -12,19 +14,15 @@
     "password"
   ],
   "author": {
-    "name": "Rowan Wookey",
-    "email": "admin@rwky.net"
+    "name": "Passport Next Developers",
+    "url": "https://github.com/orgs/passport-next/people"
   },
-  "contributors": [
-    "Brett Zamir"
-  ],
+  "contributors": [],
   "repository": {
     "type": "git",
     "url": "git://github.com/passport-next/passport-local.git"
   },
-  "bugs": {
-    "url": "https://github.com/passport-next/passport-local/issues"
-  },
+  "bugs": "https://github.com/passport-next/passport-local/issues",
   "license": "MIT",
   "homepage": "https://github.com/passport-next/passport-local",
   "main": "./lib",
@@ -33,8 +31,11 @@
   },
   "devDependencies": {
     "@brettz9/eslint-plugin": "^1.0.3",
-    "chai": "4.3.x",
+    "@passport-next/chai-connect-middleware": "^1.0.1",
+    "@passport-next/chai-passport-strategy": "1.x.x",
+    "chai": "^4.3.0",
     "chai-passport-strategy": "1.x.x",
+    "coveralls": "^3.1.0",
     "eslint": "^7.20.0",
     "eslint-config-ash-nazg": "^29.0.0",
     "eslint-config-standard": "^16.0.2",
@@ -44,7 +45,7 @@
     "eslint-plugin-eslint-comments": "^3.2.0",
     "eslint-plugin-html": "^6.1.1",
     "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-jsdoc": "^32.0.0",
+    "eslint-plugin-jsdoc": "^32.0.2",
     "eslint-plugin-markdown": "^2.0.0",
     "eslint-plugin-no-unsanitized": "^3.1.4",
     "eslint-plugin-no-use-extend-native": "^0.5.0",
@@ -52,10 +53,11 @@
     "eslint-plugin-promise": "^4.3.1",
     "eslint-plugin-radar": "^0.2.1",
     "eslint-plugin-standard": "^4.1.0",
-    "eslint-plugin-unicorn": "^28.0.0",
+    "eslint-plugin-unicorn": "^28.0.1",
     "http-server": "^0.12.3",
     "jsdoc": "^3.6.6",
-    "mocha": "8.3.x",
+    "mocha": "8.x.x",
+    "nunjucks": "^3.2.3",
     "nyc": "^15.1.0",
     "open-cli": "^6.0.1"
   },
@@ -63,11 +65,15 @@
     "node": ">=10.0.0"
   },
   "scripts": {
+    "templates": "node ./templates/gen.js",
+    "init-new-project": "node ./templates/gen --init",
     "start": "http-server -p 8004",
     "build-docs": "rm -rf docs/jsdoc/*;jsdoc --pedantic -c docs/jsdoc-config.js lib",
     "open-docs": "open-cli http://localhost:8004/docs/jsdoc/ && npm start",
-    "lint": "eslint --ext=js,md,html .",
-    "mocha": "mocha --reporter spec --require test/bootstrap/node test/*.test.js",
-    "test": "nyc npm run mocha"
+    "lint": "eslint --max-warnings 0 --ext js,md,html .",
+    "lintfix": "eslint --ext js,md,html . --fix",
+    "mocha": "mocha --reporter spec --require test/bootstrap/node.js test/*.test.js test/**/*.test.js",
+    "test": "nyc --report-dir=var/coverage --reporter=lcov --reporter=text npm run mocha",
+    "coveralls": "nyc report --report-dir=var/coverage --reporter=text-lcov | coveralls"
   }
 }

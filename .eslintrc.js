@@ -1,6 +1,10 @@
 'use strict';
+
 module.exports = {
-  extends: ['ash-nazg/sauron', 'plugin:node/recommended-script'],
+  extends: [
+    'ash-nazg/sauron-node-script-overrides'
+    // '@passport-next/eslint-config-passport-next/sauron-node.js'
+  ],
   env: {
     node: true,
     es6: true
@@ -15,7 +19,7 @@ module.exports = {
   },
   overrides: [
     {
-      files: ['test/**'],
+      files: ['test/*.js'],
       extends: [
         'ash-nazg/sauron',
         'plugin:node/recommended-script',
@@ -24,8 +28,8 @@ module.exports = {
       globals: {
         expect: 'readonly'
       },
-      env: {mocha: true},
       rules: {
+        'jsdoc/require-jsdoc': 'off'
       }
     },
     {
@@ -35,18 +39,20 @@ module.exports = {
     {
       files: '**/*.md/*.js',
       rules: {
-        'eol-last': ['off'],
-        'no-console': ['off'],
-        'no-undef': ['off'],
-        'no-unused-vars': ['warn'],
-        'padded-blocks': ['off'],
-        'import/unambiguous': ['off'],
-        'import/no-unresolved': ['off'],
-        'node/no-missing-import': ['off'],
+        'func-names': 'off',
+        'import/newline-after-import': 'off',
+        'eol-last': 'off',
+        'no-console': 'off',
+        'no-undef': 'off',
+        'no-unused-vars': 'warn',
+        'padded-blocks': 'off',
+        'import/unambiguous': 'off',
+        'import/no-unresolved': 'off',
+        'node/no-missing-import': 'off',
         'no-multi-spaces': 'off',
         strict: 'off',
         'no-useless-catch': 'off',
-        'sonarjs/no-useless-catch': 'off',
+        'radar/no-useless-catch': 'off',
         'node/no-missing-require': [
           'error', {
             allowModules: [

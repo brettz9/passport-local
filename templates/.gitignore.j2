@@ -1,7 +1,11 @@
 build/
 reports/
-docs/jsdoc
+docs/
 var/
+
+{% if npmModule == "@passport-next/skel" %}
+package-lock.json
+{% endif %}
 
 # Mac OS X
 .DS_Store

@@ -1,8 +1,6 @@
 'use strict';
-const chai = require('chai');
-const Strategy = require('../lib/strategy');
 
-chai.use(require('chai-passport-strategy'));
+const Strategy = require('../lib/strategy');
 
 describe('Strategy', function () {
   describe('passing request to verify callback', function () {
@@ -28,7 +26,7 @@ describe('Strategy', function () {
           info = i;
           done();
         })
-        .req(function (req) {
+        .req((req) => {
           req.headers['x-foo'] = 'hello';
 
           req.body = {};
@@ -38,17 +36,17 @@ describe('Strategy', function () {
         .authenticate();
     });
 
-    it('should supply user', function () {
+    it('should supply user', () => {
       expect(user).to.be.an('object');
       expect(user.id).to.equal('1234');
     });
 
-    it('should supply info', function () {
+    it('should supply info', () => {
       expect(info).to.be.an('object');
       expect(info.scope).to.equal('read');
     });
 
-    it('should supply request header in info', function () {
+    it('should supply request header in info', () => {
       expect(info.foo).to.equal('hello');
     });
   });
