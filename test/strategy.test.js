@@ -1,6 +1,6 @@
 'use strict';
 
-const Strategy = require('../lib/strategy');
+const Strategy = require('../lib/strategy.js');
 
 describe('Strategy', function () {
   const strategy = new Strategy(() => {

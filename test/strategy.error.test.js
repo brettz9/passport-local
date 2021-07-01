@@ -1,5 +1,5 @@
 'use strict';
-const Strategy = require('../lib/strategy');
+const Strategy = require('../lib/strategy.js');
 
 describe('Strategy', () => {
   describe('encountering an error during verification', () => {
