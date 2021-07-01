@@ -62,7 +62,7 @@
     "open-cli": "^7.0.0"
   },
   "engines": {
-    "node": ">=10.0.0"
+    "node": ">=12.0.0"
   },
   "scripts": {
     "templates": "node ./templates/gen.js",
