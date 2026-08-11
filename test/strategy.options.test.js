@@ -1,6 +1,5 @@
-'use strict';
-
-const Strategy = require('../lib/strategy.js');
+import {chai, expect, attachBody} from './bootstrap/node.js';
+import Strategy from '../lib/index.js';
 
 describe('Strategy', () => {
   describe(
@@ -10,7 +9,16 @@ describe('Strategy', () => {
         throw new Error('should not be called');
       });
 
-      let info, status;
+      /**
+       * @type {string | {
+       *   type?: string,
+       *   message: string
+       * }}
+       */
+      let info;
+
+      /** @type {number} */
+      let status;
 
       before((done) => {
         chai.passport.use(strategy)
@@ -19,8 +27,8 @@ describe('Strategy', () => {
             status = s;
             done();
           })
-          .req((req) => {
-            req.body = {};
+          .request((req) => {
+            attachBody(req, {});
           })
           .authenticate({
             badRequestMessage: 'Something is wrong with this request'
@@ -29,7 +37,15 @@ describe('Strategy', () => {
 
       it('should fail with info and status', () => {
         expect(info).to.be.an('object');
-        expect(info.message).to.equal('Something is wrong with this request');
+        expect(
+          /**
+           * @type {{
+           *   type?: string,
+           *   message: string
+           * }}
+           */
+          (info).message
+        ).to.equal('Something is wrong with this request');
         expect(status).to.equal(400);
       });
     }

@@ -1,5 +1,5 @@
-'use strict';
-const Strategy = require('../lib/strategy.js');
+import {chai, expect, attachBody} from './bootstrap/node.js';
+import Strategy from '../lib/index.js';
 
 describe('Strategy', () => {
   describe('handling a request with valid credentials in body', () => {
@@ -10,8 +10,10 @@ describe('Strategy', () => {
       return done(null, false);
     });
 
-    let user,
-      info;
+    /** @type {{id?: string}} */
+    let user;
+    /** @type {{scope?: string} | undefined} */
+    let info;
 
     before((done) => {
       chai.passport.use(strategy)
@@ -20,10 +22,11 @@ describe('Strategy', () => {
           info = i;
           done();
         })
-        .req((req) => {
-          req.body = {};
-          req.body.username = 'johndoe';
-          req.body.password = 'secret';
+        .request((req) => {
+          attachBody(req, {
+            username: 'johndoe',
+            password: 'secret'
+          });
         })
         .authenticate();
     });
@@ -35,7 +38,7 @@ describe('Strategy', () => {
 
     it('should supply info', () => {
       expect(info).to.be.an('object');
-      expect(info.scope).to.equal('read');
+      expect(info?.scope).to.equal('read');
     });
   });
 
@@ -47,8 +50,10 @@ describe('Strategy', () => {
       return done(null, false);
     });
 
-    let user,
-      info;
+    /** @type {{id?: string}} */
+    let user;
+    /** @type {{scope?: string} | undefined} */
+    let info;
 
     before((done) => {
       chai.passport.use(strategy)
@@ -57,10 +62,13 @@ describe('Strategy', () => {
           info = i;
           done();
         })
-        .req((req) => {
-          req.query = {};
-          req.query.username = 'johndoe';
-          req.query.password = 'secret';
+        .request((req) => {
+          Object.assign(req, {
+            query: {
+              username: 'johndoe',
+              password: 'secret'
+            }
+          });
         })
         .authenticate();
     });
@@ -72,7 +80,7 @@ describe('Strategy', () => {
 
     it('should supply info', () => {
       expect(info).to.be.an('object');
-      expect(info.scope).to.equal('read');
+      expect(info?.scope).to.equal('read');
     });
   });
 
@@ -81,7 +89,16 @@ describe('Strategy', () => {
       throw new Error('should not be called');
     });
 
-    let info, status;
+    /**
+     * @type {string | {
+     *   type?: string,
+     *   message: string
+     * }}
+     */
+    let info;
+
+    /** @type {number} */
+    let status;
 
     before((done) => {
       chai.passport.use(strategy)
@@ -95,7 +112,15 @@ describe('Strategy', () => {
 
     it('should fail with info and status', () => {
       expect(info).to.be.an('object');
-      expect(info.message).to.equal('Missing credentials');
+      expect(
+        /**
+         * @type {{
+         *   type?: string,
+         *   message: string
+         * }}
+         */
+        (info).message
+      ).to.equal('Missing credentials');
       expect(status).to.equal(400);
     });
   });
@@ -106,7 +131,16 @@ describe('Strategy', () => {
         throw new Error('should not be called');
       });
 
-      let info, status;
+      /**
+       * @type {string | {
+       *   type?: string,
+       *   message: string
+       * }}
+       */
+      let info;
+
+      /** @type {number} */
+      let status;
 
       before((done) => {
         chai.passport.use(strategy)
@@ -115,15 +149,72 @@ describe('Strategy', () => {
             status = s;
             done();
           })
-          .req((req) => {
-            req.body = {};
+          .request((req) => {
+            attachBody(req, {});
           })
           .authenticate();
       });
 
       it('should fail with info and status', () => {
         expect(info).to.be.an('object');
-        expect(info.message).to.equal('Missing credentials');
+        expect(
+          /**
+           * @type {{
+           *   type?: string,
+           *   message: string
+           * }}
+           */
+          (info).message
+        ).to.equal('Missing credentials');
+        expect(status).to.equal(400);
+      });
+    }
+  );
+
+  describe(
+    'handling a request with a body, but no password (empty user name)',
+    () => {
+      const strategy = new Strategy(() => {
+        throw new Error('should not be called');
+      });
+
+      /**
+       * @type {string | {
+       *   type?: string,
+       *   message: string
+       * }}
+       */
+      let info;
+
+      /** @type {number} */
+      let status;
+
+      before((done) => {
+        chai.passport.use(strategy)
+          .fail((i, s) => {
+            info = i;
+            status = s;
+            done();
+          })
+          .request((req) => {
+            attachBody(req, {
+              username: {}
+            });
+          })
+          .authenticate();
+      });
+
+      it('should fail with info and status', () => {
+        expect(info).to.be.an('object');
+        expect(
+          /**
+           * @type {{
+           *   type?: string,
+           *   message: string
+           * }}
+           */
+          (info).message
+        ).to.equal('Missing credentials');
         expect(status).to.equal(400);
       });
     }
@@ -134,7 +225,16 @@ describe('Strategy', () => {
       throw new Error('should not be called');
     });
 
-    let info, status;
+    /**
+     * @type {string | {
+     *   type?: string,
+     *   message: string
+     * }}
+     */
+    let info;
+
+    /** @type {number} */
+    let status;
 
     before((done) => {
       chai.passport.use(strategy)
@@ -143,45 +243,25 @@ describe('Strategy', () => {
           status = s;
           done();
         })
-        .req((req) => {
-          req.body = {
-            username: {}
-          };
+        .request((req) => {
+          attachBody(req, {
+            username: 'johndoe'
+          });
         })
         .authenticate();
     });
 
     it('should fail with info and status', () => {
       expect(info).to.be.an('object');
-      expect(info.message).to.equal('Missing credentials');
-      expect(status).to.equal(400);
-    });
-  });
-
-  describe('handling a request with a body, but no password', () => {
-    const strategy = new Strategy(() => {
-      throw new Error('should not be called');
-    });
-
-    let info, status;
-
-    before(function (done) {
-      chai.passport.use(strategy)
-        .fail(function (i, s) {
-          info = i;
-          status = s;
-          done();
-        })
-        .req(function (req) {
-          req.body = {};
-          req.body.username = 'johndoe';
-        })
-        .authenticate();
-    });
-
-    it('should fail with info and status', () => {
-      expect(info).to.be.an('object');
-      expect(info.message).to.equal('Missing credentials');
+      expect(
+        /**
+         * @type {{
+         *   type?: string,
+         *   message: string
+         * }}
+         */
+        (info).message
+      ).to.equal('Missing credentials');
       expect(status).to.equal(400);
     });
   });
@@ -191,7 +271,16 @@ describe('Strategy', () => {
       throw new Error('should not be called');
     });
 
-    let info, status;
+    /**
+     * @type {string | {
+     *   type?: string,
+     *   message: string
+     * }}
+     */
+    let info;
+
+    /** @type {number} */
+    let status;
 
     before((done) => {
       chai.passport.use(strategy)
@@ -200,16 +289,25 @@ describe('Strategy', () => {
           status = s;
           done();
         })
-        .req((req) => {
-          req.body = {};
-          req.body.password = 'secret';
+        .request((req) => {
+          attachBody(req, {
+            password: 'secret'
+          });
         })
         .authenticate();
     });
 
     it('should fail with info and status', () => {
       expect(info).to.be.an('object');
-      expect(info.message).to.equal('Missing credentials');
+      expect(
+        /**
+         * @type {{
+         *   type?: string,
+         *   message: string
+         * }}
+         */
+        (info).message
+      ).to.equal('Missing credentials');
       expect(status).to.equal(400);
     });
   });

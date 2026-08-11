@@ -1,9 +1,19 @@
-'use strict';
+import * as chaiModule from 'chai';
+import chaiPassportStrategy from '@passport-next/chai-passport-strategy';
 
-// eslint-disable-next-line no-shadow -- Bootstrap
-const chai = require('chai');
+const chai = /** @type {ReturnType<typeof chaiPassportStrategy>} */ (
+  chaiModule.use(chaiPassportStrategy)
+);
+const {expect} = chai;
 
-chai.use(require('chai-passport-strategy'));
+/**
+ * @template {Record<string, unknown>} Body
+ * @param {object} req
+ * @param {Body} body
+ * @returns {asserts req is object & {body: Body}}
+ */
+function attachBody (req, body) {
+  Object.assign(req, {body});
+}
 
-global.chai = chai;
-global.expect = chai.expect;
+export {chai, expect, attachBody};

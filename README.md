@@ -31,8 +31,8 @@ password.  The strategy requires a `verify` callback, which accepts these
 credentials and resolves to a user (or throws or returns `false`).
 
 ```js
-const passport = require('@passport-next/passport');
-const LocalStrategy = require('@passport-next/passport-local').Strategy;
+import passport from '@passport-next/passport';
+import {Strategy as LocalStrategy} from '@passport-next/passport-local';
 
 passport.use(new LocalStrategy(
   async function (username, password) {
@@ -107,7 +107,7 @@ For example, as route middleware in an [Express](http://expressjs.com/)
 application:
 
 ```js
-const bodyParser = require('body-parser');
+import bodyParser from 'body-parser';
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(passport.initialize());

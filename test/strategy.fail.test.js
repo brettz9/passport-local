@@ -1,6 +1,5 @@
-'use strict';
-
-const Strategy = require('../lib/strategy.js');
+import {chai, expect, attachBody} from './bootstrap/node.js';
+import Strategy from '../lib/index.js';
 
 describe('Strategy', () => {
   describe('failing authentication', () => {
@@ -8,6 +7,12 @@ describe('Strategy', () => {
       return done(null, false);
     });
 
+    /**
+     * @type {string | {
+     *   type?: string,
+     *   message: string
+     * }}
+     */
     let info;
 
     before((done) => {
@@ -16,10 +21,11 @@ describe('Strategy', () => {
           info = i;
           done();
         })
-        .req((req) => {
-          req.body = {};
-          req.body.username = 'johndoe';
-          req.body.password = 'secret';
+        .request((req) => {
+          attachBody(req, {
+            username: 'johndoe',
+            password: 'secret'
+          });
         })
         .authenticate();
     });
@@ -34,6 +40,7 @@ describe('Strategy', () => {
       return done(null, false, {message: 'authentication failed'});
     });
 
+    /** @type {string | {message?: string}} */
     let info;
 
     before((done) => {
@@ -42,17 +49,21 @@ describe('Strategy', () => {
           info = i;
           done();
         })
-        .req((req) => {
-          req.body = {};
-          req.body.username = 'johndoe';
-          req.body.password = 'secret';
+        .request((req) => {
+          attachBody(req, {
+            username: 'johndoe',
+            password: 'secret'
+          });
         })
         .authenticate();
     });
 
     it('should fail', () => {
       expect(info).to.be.an('object');
-      expect(info.message).to.equal('authentication failed');
+      expect(
+        /** @type {{message: string}} */
+        (info).message
+      ).to.equal('authentication failed');
     });
   });
 
@@ -61,6 +72,7 @@ describe('Strategy', () => {
       return done(null, false, {message: 'authentication failed'}, 403);
     });
 
+    /** @type {number} */
     let status;
 
     before((done) => {
@@ -69,10 +81,11 @@ describe('Strategy', () => {
           status = s;
           done();
         })
-        .req((req) => {
-          req.body = {};
-          req.body.username = 'johndoe';
-          req.body.password = 'secret';
+        .request((req) => {
+          attachBody(req, {
+            username: 'johndoe',
+            password: 'secret'
+          });
         })
         .authenticate();
     });

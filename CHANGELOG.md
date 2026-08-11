@@ -1,17 +1,23 @@
+# CHANGES for @passport-next/passport-local
+
 This changelog follows Semantic Versioning https://semver.org/
 
-# UNRELEASED
+## 2.0.0 (2026-08-12)
 
 ### Major
 
-- Update `engines` to >= 10.0.0
-- Enhancement: Implement Promise-based API
+- feat: implement Promise-based API
+- feat: add TypeScript; switch to native ESM
+- chore: update `engines` to ^22.22.2 || >=24.15.0
 
 ### Minor
 
 ### Patch
 
-# 1.2.1 (2019-10-08)
+- chore: update devDeps; lint; drop travis
+- test: add test against @passport-next/passport
+
+## 1.2.1 (2019-10-08)
 
 ### Patch
 

@@ -1,6 +1,6 @@
-'use strict';
+import {expect} from './bootstrap/node.js';
 
-const Strategy = require('../lib/strategy.js');
+import Strategy from '../lib/index.js';
 
 describe('Strategy', function () {
   const strategy = new Strategy(() => {
@@ -13,6 +13,7 @@ describe('Strategy', function () {
 
   it('should throw if constructed without a verify callback', () => {
     expect(() => {
+      // @ts-expect-error -- Bad argument
       // eslint-disable-next-line no-new -- Deliberately testing that it throws
       /* const s = */ new Strategy();
     }).to.throw(TypeError, 'LocalStrategy requires a verify callback');

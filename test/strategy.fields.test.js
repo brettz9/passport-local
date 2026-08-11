@@ -1,6 +1,5 @@
-'use strict';
-
-const Strategy = require('../lib/strategy.js');
+import {chai, expect, attachBody} from './bootstrap/node.js';
+import Strategy from '../lib/index.js';
 
 describe('Strategy', () => {
   describe('handling a request with valid credentials in body using ' +
@@ -14,7 +13,10 @@ describe('Strategy', () => {
       return done(null, false);
     });
 
-    let user, info;
+    /** @type {{id?: string}} */
+    let user;
+    /** @type {{scope?: string} | undefined} */
+    let info;
 
     before((done) => {
       chai.passport.use(strategy)
@@ -23,10 +25,11 @@ describe('Strategy', () => {
           info = i;
           done();
         })
-        .req((req) => {
-          req.body = {};
-          req.body.userid = 'johndoe';
-          req.body.passwd = 'secret';
+        .request((req) => {
+          attachBody(req, {
+            userid: 'johndoe',
+            passwd: 'secret'
+          });
         })
         .authenticate();
     });
@@ -38,7 +41,7 @@ describe('Strategy', () => {
 
     it('should supply info', () => {
       expect(info).to.be.an('object');
-      expect(info.scope).to.equal('read');
+      expect(info?.scope).to.equal('read');
     });
   });
 
@@ -53,8 +56,10 @@ describe('Strategy', () => {
       return done(null, false);
     });
 
-    let user,
-      info;
+    /** @type {{id?: string}} */
+    let user;
+    /** @type {{scope?: string} | undefined} */
+    let info;
 
     before((done) => {
       chai.passport.use(strategy)
@@ -63,11 +68,13 @@ describe('Strategy', () => {
           info = i;
           done();
         })
-        .req((req) => {
-          req.body = {};
-          req.body.user = {};
-          req.body.user.username = 'johndoe';
-          req.body.user.password = 'secret';
+        .request((req) => {
+          attachBody(req, {
+            user: {
+              username: 'johndoe',
+              password: 'secret'
+            }
+          });
         })
         .authenticate();
     });
@@ -79,7 +86,7 @@ describe('Strategy', () => {
 
     it('should supply info', () => {
       expect(info).to.be.an('object');
-      expect(info.scope).to.equal('read');
+      expect(info?.scope).to.equal('read');
     });
   });
 });
