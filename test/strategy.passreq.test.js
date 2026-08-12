@@ -1,6 +1,5 @@
-'use strict';
-
-const Strategy = require('../lib/strategy.js');
+import {chai, expect, attachBody} from './bootstrap/node.js';
+import Strategy from '../lib/index.js';
 
 describe('Strategy', function () {
   describe('passing request to verify callback', function () {
@@ -17,7 +16,10 @@ describe('Strategy', function () {
       return done(null, false);
     });
 
-    let user, info;
+    /** @type {{id?: string}} */
+    let user;
+    /** @type {{scope?: string, foo?: string} | undefined} */
+    let info;
 
     before(function (done) {
       chai.passport.use(strategy)
@@ -26,12 +28,13 @@ describe('Strategy', function () {
           info = i;
           done();
         })
-        .req((req) => {
+        .request((req) => {
           req.headers['x-foo'] = 'hello';
 
-          req.body = {};
-          req.body.username = 'johndoe';
-          req.body.password = 'secret';
+          attachBody(req, {
+            username: 'johndoe',
+            password: 'secret'
+          });
         })
         .authenticate();
     });
@@ -43,11 +46,11 @@ describe('Strategy', function () {
 
     it('should supply info', () => {
       expect(info).to.be.an('object');
-      expect(info.scope).to.equal('read');
+      expect(info?.scope).to.equal('read');
     });
 
     it('should supply request header in info', () => {
-      expect(info.foo).to.equal('hello');
+      expect(info?.foo).to.equal('hello');
     });
   });
 
@@ -68,7 +71,10 @@ describe('Strategy', function () {
       };
     });
 
-    let user, info;
+    /** @type {{id?: string}} */
+    let user;
+    /** @type {{scope?: string, foo?: string} | undefined} */
+    let info;
 
     before(function (done) {
       chai.passport.use(strategy)
@@ -77,12 +83,13 @@ describe('Strategy', function () {
           info = i;
           done();
         })
-        .req(function (req) {
+        .request(function (req) {
           req.headers['x-foo'] = 'hello';
 
-          req.body = {};
-          req.body.username = 'johndoe';
-          req.body.password = 'secret';
+          attachBody(req, {
+            username: 'johndoe',
+            password: 'secret'
+          });
         })
         .authenticate();
     });
@@ -94,11 +101,11 @@ describe('Strategy', function () {
 
     it('should supply info', function () {
       expect(info).to.be.an('object');
-      expect(info.scope).to.equal('read');
+      expect(info?.scope).to.equal('read');
     });
 
     it('should supply request header in info', function () {
-      expect(info.foo).to.equal('hello');
+      expect(info?.foo).to.equal('hello');
     });
   });
 });

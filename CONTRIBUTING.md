@@ -33,14 +33,6 @@ Some lint errors can be fixed with
 npm run lintfix
 ```
 
-Coverage reports can be generated and viewed by executing:
-
-```bash
-npm run coverage
-```
-
-The output in html form will be in `var/coverage`
-
 Templates such as README.md can be updated via
 
 ```bash

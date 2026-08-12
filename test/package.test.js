@@ -1,10 +1,8 @@
-'use strict';
-
-const strategy = require('..');
+import {expect} from './bootstrap/node.js';
+import Strategy from '../lib/index.js';
 
 describe('passport-local', () => {
   it('should export Strategy constructor directly from package', () => {
-    expect(strategy).to.be.a('function');
-    expect(strategy).to.equal(strategy.Strategy);
+    expect(Strategy).to.be.a('function');
   });
 });

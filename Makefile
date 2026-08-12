@@ -31,9 +31,6 @@ include support/mk/coveralls.mk
 # ==============================================================================
 submit-cov-to-coveralls: submit-istanbul-lcov-to-coveralls
 
-# Travis CI
-ci-travis: test test-cov
-
 # ==============================================================================
 # Clean
 # ==============================================================================
@@ -44,4 +41,4 @@ clean:
 clobber: clean clobber-node
 
 
-.PHONY: test test-cov view-cov lint lint-tests submit-cov-to-coveralls ci-travis clean clobber
+.PHONY: test test-cov view-cov lint lint-tests submit-cov-to-coveralls clean clobber
