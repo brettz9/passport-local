@@ -1,4 +1,4 @@
-# Passport-Next/Passport-Local 
+# Passport-Next/Passport-Local
 
 Status:
 [![NPM version](https://img.shields.io/npm/v/@passport-next/passport-local.svg)](https://www.npmjs.com/package/@passport-next/passport-local)
@@ -18,9 +18,112 @@ unobtrusively integrated into any application or framework that supports
 
 ## Install
 
+```bash
+npm install @passport-next/passport-local
 ```
-$ npm install @passport-next/passport-local
+
+## Usage
+
+#### Configure Strategy
+
+The local authentication strategy authenticates users using a username and
+password.  The strategy requires a `verify` callback, which accepts these
+credentials and resolves to a user (or throws or returns `false`).
+
+```js
+const passport = require('@passport-next/passport');
+const LocalStrategy = require('@passport-next/passport-local').Strategy;
+
+passport.use(new LocalStrategy(
+  async function (username, password) {
+    let user;
+    try {
+      user = await User.findOne({username});
+    } catch (err) {
+      console.log(err);
+      throw err;
+    }
+    if (!user || !user.verifyPassword(password)) {
+      return {user: false};
+    }
+    return {user};
+  }
+));
 ```
+
+##### Available Options
+
+This strategy takes an optional options hash before the function, e.g. `new LocalStrategy({/* options */ }, callback)`.
+
+The available options are:
+
+* `usernameField` - Optional, defaults to 'username'
+* `passwordField` - Optional, defaults to 'password'
+
+Both fields define the name of the properties in the POST body that are sent to the server.
+
+#### Parameters
+
+By default, `LocalStrategy` expects to find credentials in parameters
+named `username` and `password`. If your site prefers to name these fields
+differently, options are available to change the defaults.
+
+```js
+passport.use(
+  new LocalStrategy({
+    usernameField: 'email',
+    passwordField: 'passwd'
+  },
+  function (username, password, done) {
+    // ...
+  })
+);
+```
+
+The verify callback can be supplied with the `request` object by setting
+the `passReqToCallback` option to true, and changing callback arguments
+accordingly.
+
+```js
+passport.use(
+  new LocalStrategy({
+    usernameField: 'email',
+    passwordField: 'passwd',
+    passReqToCallback: true
+  },
+  function (req, username, password, done) {
+    // request object is now first argument
+    // ...
+  })
+);
+```
+
+Use `passport.authenticate()`, specifying the `'local'` strategy, to
+authenticate requests. It searches for fields in the query string and
+`req.body`, so ensure body parsers are in place if these fields are
+sent in the body.
+
+For example, as route middleware in an [Express](http://expressjs.com/)
+application:
+
+```js
+const bodyParser = require('body-parser');
+
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(passport.initialize());
+
+app.post('/login',
+  passport.authenticate('local', {failureRedirect: '/login'}),
+  function (req, res) {
+    res.redirect('/');
+  });
+```
+
+## Examples
+
+Developers using the popular [Express](http://expressjs.com/) web framework can
+refer to an [example](https://github.com/passport/express-4.x-local-example)
+as a starting point for their own web applications.
 
 ## Docs
 
@@ -32,11 +135,13 @@ Please raise an [issue](https://github.com/passport-next/passport-local/issues) 
 
 ## Support policy
 
-We support all [node versions](https://github.com/nodejs/Release) supported by the Node Foundation
-
-
+We support all [node versions](https://github.com/nodejs/Release) supported by the Node Foundation.
 
 ## Contributing
 
-Please see [CONTRIBUTING.md](https://github.com/passport-next/passport-local/blob/master/CONTRIBUTING.md)
+Please see [CONTRIBUTING.md](https://github.com/passport-next/passport-local/blob/master/CONTRIBUTING.md).
 
+```bash
+npm install
+npm test
+```

@@ -1,9 +1,12 @@
+Makefile
+build/
 CONTRIBUTING.md
 docs/
-.DS_Store
 .eslintignore
 .eslintrc.js
 examples/
+reports/
+support/
 .github/
 .gitlab-ci.yml
 .nyc_output
@@ -11,3 +14,9 @@ templates
 test/
 .travis.yml
 var/
+
+# Node.js
+npm-debug.log
+
+# Mac OS X
+.DS_Store

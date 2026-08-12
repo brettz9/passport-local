@@ -1,4 +1,4 @@
-/* eslint no-sync: 0, no-console: 0, node/no-unpublished-require: 0 */
+/* eslint-disable no-console, node/no-sync -- Build script */
 'use strict';
 const fs = require('fs');
 const path = require('path');
@@ -36,7 +36,7 @@ fileList.forEach((file) => {
   const dest = destDir + parsedPath.name;
   if (destDir !== '') {
     if (!fs.existsSync(destDir)) {
-      fs.mkdirSync(destDir, { recursive: true });
+      fs.mkdirSync(destDir, {recursive: true});
     }
   }
   if (!init && variables.ignoreExisting.includes(dest) && fs.existsSync(dest)) {

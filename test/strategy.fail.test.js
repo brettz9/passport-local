@@ -1,11 +1,6 @@
-/* global describe, it, expect, before */
-/* jshint expr: true */
 'use strict';
 
-const chai = require('chai');
-const Strategy = require('../lib/strategy');
-
-chai.use(require('@passport-next/chai-passport-strategy'));
+const Strategy = require('../lib/strategy.js');
 
 describe('Strategy', () => {
   describe('failing authentication', () => {
@@ -30,14 +25,13 @@ describe('Strategy', () => {
     });
 
     it('should fail', () => {
-      // eslint-disable-next-line no-unused-expressions
       expect(info).to.be.undefined;
     });
   });
 
   describe('failing authentication with info', () => {
     const strategy = new Strategy((username, password, done) => {
-      return done(null, false, { message: 'authentication failed' });
+      return done(null, false, {message: 'authentication failed'});
     });
 
     let info;
@@ -64,7 +58,7 @@ describe('Strategy', () => {
 
   describe('failing authentication with info and status', () => {
     const strategy = new Strategy((username, password, done) => {
-      return done(null, false, { message: 'authentication failed' }, 403);
+      return done(null, false, {message: 'authentication failed'}, 403);
     });
 
     let status;

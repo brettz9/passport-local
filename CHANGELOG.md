@@ -4,6 +4,9 @@ This changelog follows Semantic Versioning https://semver.org/
 
 ### Major
 
+- Update `engines` to >= 10.0.0
+- Enhancement: Implement Promise-based API
+
 ### Minor
 
 ### Patch
@@ -26,4 +29,3 @@ This changelog follows Semantic Versioning https://semver.org/
 * Added CHANGELOG.md @rwky
 * Updated travis to use node 6, 8 and 10 @rwky
 * Updated README.md and package.json for passport-next org
-

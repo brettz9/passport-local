@@ -1,17 +1,11 @@
-/* global describe, it, expect, before */
-/* jshint expr: true */
 'use strict';
-
-const chai = require('chai');
-const Strategy = require('../lib/strategy');
-
-chai.use(require('@passport-next/chai-passport-strategy'));
+const Strategy = require('../lib/strategy.js');
 
 describe('Strategy', () => {
   describe('handling a request with valid credentials in body', () => {
     const strategy = new Strategy((username, password, done) => {
       if (username === 'johndoe' && password === 'secret') {
-        return done(null, { id: '1234' }, { scope: 'read' });
+        return done(null, {id: '1234'}, {scope: 'read'});
       }
       return done(null, false);
     });
@@ -48,7 +42,7 @@ describe('Strategy', () => {
   describe('handling a request with valid credentials in query', () => {
     const strategy = new Strategy((username, password, done) => {
       if (username === 'johndoe' && password === 'secret') {
-        return done(null, { id: '1234' }, { scope: 'read' });
+        return done(null, {id: '1234'}, {scope: 'read'});
       }
       return done(null, false);
     });
@@ -106,7 +100,36 @@ describe('Strategy', () => {
     });
   });
 
-  describe('handling a request with a body, but no username and password', () => {
+  describe(
+    'handling a request with a body, but no username and password', () => {
+      const strategy = new Strategy(() => {
+        throw new Error('should not be called');
+      });
+
+      let info, status;
+
+      before((done) => {
+        chai.passport.use(strategy)
+          .fail((i, s) => {
+            info = i;
+            status = s;
+            done();
+          })
+          .req((req) => {
+            req.body = {};
+          })
+          .authenticate();
+      });
+
+      it('should fail with info and status', () => {
+        expect(info).to.be.an('object');
+        expect(info.message).to.equal('Missing credentials');
+        expect(status).to.equal(400);
+      });
+    }
+  );
+
+  describe('handling a request with a body, but no password', () => {
     const strategy = new Strategy(() => {
       throw new Error('should not be called');
     });
@@ -121,7 +144,9 @@ describe('Strategy', () => {
           done();
         })
         .req((req) => {
-          req.body = {};
+          req.body = {
+            username: {}
+          };
         })
         .authenticate();
     });
@@ -140,14 +165,14 @@ describe('Strategy', () => {
 
     let info, status;
 
-    before((done) => {
+    before(function (done) {
       chai.passport.use(strategy)
-        .fail((i, s) => {
+        .fail(function (i, s) {
           info = i;
           status = s;
           done();
         })
-        .req((req) => {
+        .req(function (req) {
           req.body = {};
           req.body.username = 'johndoe';
         })

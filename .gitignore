@@ -1,8 +1,7 @@
+build/
 reports/
-docs/
+docs/jsdoc
 var/
-
-
 
 # Mac OS X
 .DS_Store

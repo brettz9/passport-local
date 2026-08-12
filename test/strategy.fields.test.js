@@ -1,23 +1,20 @@
-/* global describe, it, expect, before */
-/* jshint expr: true */
 'use strict';
 
-const chai = require('chai');
-const Strategy = require('../lib/strategy');
-
-chai.use(require('@passport-next/chai-passport-strategy'));
+const Strategy = require('../lib/strategy.js');
 
 describe('Strategy', () => {
-  describe('handling a request with valid credentials in body using custom field names', () => {
-    const strategy = new Strategy({ usernameField: 'userid', passwordField: 'passwd' }, (username, password, done) => {
+  describe('handling a request with valid credentials in body using ' +
+    'custom field names', () => {
+    const strategy = new Strategy({
+      usernameField: 'userid', passwordField: 'passwd'
+    }, (username, password, done) => {
       if (username === 'johndoe' && password === 'secret') {
-        return done(null, { id: '1234' }, { scope: 'read' });
+        return done(null, {id: '1234'}, {scope: 'read'});
       }
       return done(null, false);
     });
 
-    let user,
-      info;
+    let user, info;
 
     before((done) => {
       chai.passport.use(strategy)
@@ -45,10 +42,13 @@ describe('Strategy', () => {
     });
   });
 
-  describe('handling a request with valid credentials in body using custom field names with object notation', () => {
-    const strategy = new Strategy({ usernameField: 'user[username]', passwordField: 'user[password]' }, (username, password, done) => {
+  describe('handling a request with valid credentials in body using ' +
+    'custom field names with object notation', () => {
+    const strategy = new Strategy({
+      usernameField: 'user[username]', passwordField: 'user[password]'
+    }, (username, password, done) => {
       if (username === 'johndoe' && password === 'secret') {
-        return done(null, { id: '1234' }, { scope: 'read' });
+        return done(null, {id: '1234'}, {scope: 'read'});
       }
       return done(null, false);
     });

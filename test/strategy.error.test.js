@@ -1,10 +1,5 @@
-/* global describe, it, expect, before */
 'use strict';
-
-const chai = require('chai');
-const Strategy = require('../lib/strategy');
-
-chai.use(require('@passport-next/chai-passport-strategy'));
+const Strategy = require('../lib/strategy.js');
 
 describe('Strategy', () => {
   describe('encountering an error during verification', () => {
@@ -35,7 +30,7 @@ describe('Strategy', () => {
   });
 
   describe('encountering an exception during verification', () => {
-    const strategy = new Strategy(() => {
+    const strategy = new Strategy((username, password, done) => {
       throw new Error('something went horribly wrong');
     });
 
