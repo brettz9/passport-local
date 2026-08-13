@@ -2,7 +2,10 @@ import {expect} from './bootstrap/node.js';
 
 import Strategy from '../lib/index.js';
 
+/** @import {StrategyLike} from '@passport-next/chai-passport-strategy' */
+
 describe('Strategy', function () {
+  /** @satisfies {StrategyLike} */
   const strategy = new Strategy(() => {
     // empty function
   });

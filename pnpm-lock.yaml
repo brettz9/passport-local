@@ -22,8 +22,8 @@ importers:
         specifier: ^0.18.5
         version: 0.18.5
       '@passport-next/chai-passport-strategy':
-        specifier: ^2.2.0
-        version: 2.2.0
+        specifier: ^2.3.0
+        version: 2.3.0
       '@passport-next/passport':
         specifier: ^3.1.0
         version: 3.1.0
@@ -338,8 +338,8 @@ packages:
     resolution: {integrity: sha512-oGB+UxlgWcgQkgwo8GcEGwemoTFt3FIO9ababBmaGwXIoBKZ+GTy0pP185beGg7Llih/NSHSV2XAs1lnznocSg==}
     engines: {node: '>= 8'}
 
-  '@passport-next/chai-passport-strategy@2.2.0':
-    resolution: {integrity: sha512-Qypu+/n4lKV600YMRbaVZIZjHqEro73LUyMEy4YmyTRMnEDMueyaTmis3FI1241gcSECjwpcJBKH30JvDIeVSQ==}
+  '@passport-next/chai-passport-strategy@2.3.0':
+    resolution: {integrity: sha512-fjBWevQ+F1xazU/DdNeArRsDuvHvjFL0C6mxSzlqhoiMHY4KJ3FYEfOHOBYW/n5Hfl6C7rck9aOe5AtJgrWYjw==}
     engines: {node: ^22.22.2 || >=24.15.0}
 
   '@passport-next/http-types@0.2.0':
@@ -348,10 +348,6 @@ packages:
   '@passport-next/passport-strategy@1.1.0':
     resolution: {integrity: sha512-2KhFjtPueJG6xVj2HnqXt9BlANOfYCVLyu+pXYjPGBDT8yk+vQwc/6tsceIj+mayKcoxMau2JimggXRPHgoc8w==}
     engines: {node: '>= 6.0.0'}
-
-  '@passport-next/passport-strategy@2.1.0':
-    resolution: {integrity: sha512-7V9f/AWpEd0oqR9juKJ9/zsl+syPKlXZ3984x6SI7psMOAUzB49l6fx0oYTZdxESCHiQUGOKf/M79AAW5RAUyw==}
-    engines: {node: ^22.22.2 || >=24.15.0}
 
   '@passport-next/passport-strategy@2.2.0':
     resolution: {integrity: sha512-S3h3UXLf/P1EVc1IGfuw5F0NNNEU3N7WK4faHFX0eJBtV8lRNLgooHVYuHc8uAvm/A6FnBmbzmB5TDmYYFAsxA==}
@@ -3126,17 +3122,15 @@ snapshots:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.20.1
 
-  '@passport-next/chai-passport-strategy@2.2.0':
+  '@passport-next/chai-passport-strategy@2.3.0':
     dependencies:
       '@passport-next/http-types': 0.2.0
-      '@passport-next/passport-strategy': 2.1.0
+      '@passport-next/passport-strategy': 2.2.0
       '@passport-next/passport-types': 0.3.0(@passport-next/http-types@0.2.0)
 
   '@passport-next/http-types@0.2.0': {}
 
   '@passport-next/passport-strategy@1.1.0': {}
-
-  '@passport-next/passport-strategy@2.1.0': {}
 
   '@passport-next/passport-strategy@2.2.0':
     dependencies:
