@@ -2,6 +2,17 @@
 
 This changelog follows Semantic Versioning https://semver.org/
 
+## 2.1.0 (2026-08-13)
+
+### Major
+
+### Minor
+
+- chore: update http-types, passport-types, passport-strategy, devDeps
+
+### Patch
+
+
 ## 2.0.0 (2026-08-12)
 
 ### Major

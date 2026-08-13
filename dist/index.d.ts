@@ -1,15 +1,14 @@
 export default Strategy;
-export type User = Record<string, unknown>;
-export type SuccessInfo = Record<string, unknown> & {
+export type User = import("@passport-next/passport-types").User;
+export type SuccessInfo = import("@passport-next/passport-types").AuthInfo & Record<string, unknown> & {
     type?: string;
     message?: string;
 };
-export type Request = {
-    body?: Record<string, unknown> | undefined;
-    query?: Record<string, unknown> | undefined;
-    headers: Record<string, string>;
+export type Request = import("@passport-next/http-types").ConnectRequest & import("@passport-next/passport-types").Request & {
+    body?: Record<string, unknown>;
+    query?: Record<string, unknown>;
 };
-export type VerifiedCallback = (err: Error | null | undefined, user?: false | User | undefined, info?: string | SuccessInfo | undefined, status?: number | undefined) => void;
+export type VerifiedCallback = (err: Error | null | undefined, user?: false | import("@passport-next/passport-types").User | undefined, info?: string | SuccessInfo | undefined, status?: number | undefined) => void;
 export type UserInfoStatus = {
     user: User | false;
     /**
@@ -48,18 +47,20 @@ export type DefaultStrategyOptions = StrategyOptions & {
 export type AuthenticateOptions = {
     badRequestMessage?: string | undefined;
 };
-/** @typedef {Record<string, unknown>} User */
+/** @typedef {import('@passport-next/passport-types').User} User */
 /**
- * @typedef {Record<string, unknown> & {
+ * @typedef {import('@passport-next/passport-types').AuthInfo &
+ *   Record<string, unknown> & {
  *   type?: string,
  *   message?: string
  * }} SuccessInfo
  */
 /**
- * @typedef {object} Request
- * @property {Record<string, unknown>} [body]
- * @property {Record<string, unknown>} [query]
- * @property {Record<string, string>} headers
+ * @typedef {import('@passport-next/http-types').ConnectRequest &
+ *   import('@passport-next/passport-types').Request & {
+ *     body?: Record<string, unknown>,
+ *     query?: Record<string, unknown>
+ *   }} Request
  */
 /**
  * @callback VerifiedCallback

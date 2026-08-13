@@ -1,6 +1,6 @@
 {
   "name": "@passport-next/passport-local",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "type": "module",
   "exports": {
     "types": "./dist/index.d.ts",
@@ -31,12 +31,13 @@
   "license": "MIT",
   "homepage": "https://github.com/passport-next/passport-local",
   "dependencies": {
-    "@passport-next/passport-strategy": "^2.1.0"
+    "@passport-next/http-types": "^0.2.0",
+    "@passport-next/passport-strategy": "^2.2.0",
+    "@passport-next/passport-types": "^0.3.0"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.18.5",
-    "@passport-next/chai-connect-middleware": "^2.0.0",
-    "@passport-next/chai-passport-strategy": "^2.1.3",
+    "@passport-next/chai-passport-strategy": "^2.2.0",
     "@passport-next/passport": "^3.1.0",
     "@types/chai": "^5.2.3",
     "@types/mocha": "^10.0.10",
