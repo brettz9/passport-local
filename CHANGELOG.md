@@ -2,6 +2,16 @@
 
 This changelog follows Semantic Versioning https://semver.org/
 
+## UNRELASED
+
+### Major
+
+### Minor
+
+### Patch
+
+- chore: update passport-types (with updated peer dep.)
+
 ## 2.1.0 (2026-08-13)
 
 ### Major
