@@ -3,6 +3,7 @@ import Strategy from '../lib/index.js';
 
 /** @import {AuthInfo} from '@passport-next/passport-types' */
 /** @typedef {string | number | AuthInfo | undefined} FailChallenge */
+/** @typedef {string | AuthInfo | undefined} SuccessInfo */
 
 describe('Strategy', () => {
   describe('handling a request with valid credentials in body', () => {
@@ -15,7 +16,7 @@ describe('Strategy', () => {
 
     /** @type {{id?: string}} */
     let user;
-    /** @type {{scope?: string} | undefined} */
+    /** @type {SuccessInfo} */
     let info;
 
     before((done) => {
@@ -41,7 +42,9 @@ describe('Strategy', () => {
 
     it('should supply info', () => {
       expect(info).to.be.an('object');
-      expect(info?.scope).to.equal('read');
+      expect(
+        /** @type {{scope?: string}} */ (info).scope
+      ).to.equal('read');
     });
   });
 
@@ -55,7 +58,7 @@ describe('Strategy', () => {
 
     /** @type {{id?: string}} */
     let user;
-    /** @type {{scope?: string} | undefined} */
+    /** @type {SuccessInfo} */
     let info;
 
     before((done) => {
@@ -83,7 +86,9 @@ describe('Strategy', () => {
 
     it('should supply info', () => {
       expect(info).to.be.an('object');
-      expect(info?.scope).to.equal('read');
+      expect(
+        /** @type {{scope?: string}} */ (info).scope
+      ).to.equal('read');
     });
   });
 

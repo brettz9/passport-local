@@ -48,7 +48,7 @@ describe('@passport-next/passport integration', () => {
        * @param {Error | null} err
        * @param {{id: string} | false} user
        * @param {{scope: string}} info
-         * @returns {void}
+       * @returns {void}
        */
       (err, user, info) => {
         try {

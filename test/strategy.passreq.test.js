@@ -1,6 +1,9 @@
 import {chai, expect, attachBody} from './bootstrap/node.js';
 import Strategy from '../lib/index.js';
 
+/** @import {AuthInfo} from '@passport-next/passport-types' */
+/** @typedef {string | AuthInfo | undefined} SuccessInfo */
+
 describe('Strategy', function () {
   describe('passing request to verify callback', function () {
     const strategy = new Strategy({
@@ -18,7 +21,7 @@ describe('Strategy', function () {
 
     /** @type {{id?: string}} */
     let user;
-    /** @type {{scope?: string, foo?: string} | undefined} */
+    /** @type {SuccessInfo} */
     let info;
 
     before(function (done) {
@@ -46,11 +49,15 @@ describe('Strategy', function () {
 
     it('should supply info', () => {
       expect(info).to.be.an('object');
-      expect(info?.scope).to.equal('read');
+      expect(
+        /** @type {{scope?: string}} */ (info).scope
+      ).to.equal('read');
     });
 
     it('should supply request header in info', () => {
-      expect(info?.foo).to.equal('hello');
+      expect(
+        /** @type {{foo?: string}} */ (info).foo
+      ).to.equal('hello');
     });
   });
 
@@ -73,7 +80,7 @@ describe('Strategy', function () {
 
     /** @type {{id?: string}} */
     let user;
-    /** @type {{scope?: string, foo?: string} | undefined} */
+    /** @type {SuccessInfo} */
     let info;
 
     before(function (done) {
@@ -101,11 +108,15 @@ describe('Strategy', function () {
 
     it('should supply info', function () {
       expect(info).to.be.an('object');
-      expect(info?.scope).to.equal('read');
+      expect(
+        /** @type {{scope?: string}} */ (info).scope
+      ).to.equal('read');
     });
 
     it('should supply request header in info', function () {
-      expect(info?.foo).to.equal('hello');
+      expect(
+        /** @type {{foo?: string}} */ (info).foo
+      ).to.equal('hello');
     });
   });
 });

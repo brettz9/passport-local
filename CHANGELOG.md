@@ -2,11 +2,11 @@
 
 This changelog follows Semantic Versioning https://semver.org/
 
-## UNRELASED
-
-### Major
+## 2.2.0 (2026-08-14)
 
 ### Minor
+
+- chore: update passport-strategy and devDep
 
 ### Patch
 

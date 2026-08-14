@@ -1,6 +1,6 @@
 {
   "name": "@passport-next/passport-local",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "type": "module",
   "exports": {
     "types": "./dist/index.d.ts",
@@ -32,12 +32,12 @@
   "homepage": "https://github.com/passport-next/passport-local",
   "dependencies": {
     "@passport-next/http-types": "^0.2.0",
-    "@passport-next/passport-strategy": "^2.3.0",
+    "@passport-next/passport-strategy": "^2.4.0",
     "@passport-next/passport-types": "^0.3.1"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.18.5",
-    "@passport-next/chai-passport-strategy": "^3.1.0",
+    "@passport-next/chai-passport-strategy": "^3.2.0",
     "@passport-next/passport": "^3.1.0",
     "@types/chai": "^5.2.3",
     "@types/mocha": "^10.0.10",
@@ -45,7 +45,7 @@
     "chai": "^6.2.2",
     "coveralls": "^3.1.1",
     "eslint": "^10.8.1",
-    "eslint-config-ash-nazg": "^42.3.1",
+    "eslint-config-ash-nazg": "^42.4.0",
     "http-server": "^14.1.1",
     "jsdoc": "^4.0.5",
     "mocha": "^11.8.0",
