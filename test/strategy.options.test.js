@@ -1,6 +1,9 @@
 import {chai, expect, attachBody} from './bootstrap/node.js';
 import Strategy from '../lib/index.js';
 
+/** @import {AuthInfo} from '@passport-next/passport-types' */
+/** @typedef {string | number | AuthInfo | undefined} FailChallenge */
+
 describe('Strategy', () => {
   describe(
     'handling a request with a body, but no username and password, ' +
@@ -9,15 +12,10 @@ describe('Strategy', () => {
         throw new Error('should not be called');
       });
 
-      /**
-       * @type {string | {
-       *   type?: string,
-       *   message: string
-       * }}
-       */
+      /** @type {FailChallenge} */
       let info;
 
-      /** @type {number} */
+      /** @type {number | undefined} */
       let status;
 
       before((done) => {

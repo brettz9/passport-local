@@ -1,18 +1,16 @@
 import {chai, expect, attachBody} from './bootstrap/node.js';
 import Strategy from '../lib/index.js';
 
+/** @import {AuthInfo} from '@passport-next/passport-types' */
+/** @typedef {string | number | AuthInfo | undefined} FailChallenge */
+
 describe('Strategy', () => {
   describe('failing authentication', () => {
     const strategy = new Strategy((username, password, done) => {
       return done(null, false);
     });
 
-    /**
-     * @type {string | {
-     *   type?: string,
-     *   message: string
-     * }}
-     */
+    /** @type {FailChallenge} */
     let info;
 
     before((done) => {
@@ -40,7 +38,7 @@ describe('Strategy', () => {
       return done(null, false, {message: 'authentication failed'});
     });
 
-    /** @type {string | {message?: string}} */
+    /** @type {FailChallenge} */
     let info;
 
     before((done) => {
@@ -72,7 +70,7 @@ describe('Strategy', () => {
       return done(null, false, {message: 'authentication failed'}, 403);
     });
 
-    /** @type {number} */
+    /** @type {number | undefined} */
     let status;
 
     before((done) => {

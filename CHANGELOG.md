@@ -10,7 +10,8 @@ This changelog follows Semantic Versioning https://semver.org/
 
 ### Patch
 
-- chore: update passport-types (with updated peer dep.)
+- chore: update `passport-types` (with updated peer dep.)
+- test: update tests as per updated `chai-passport-strategy`
 
 ## 2.1.0 (2026-08-13)
 
