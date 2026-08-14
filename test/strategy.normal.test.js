@@ -76,7 +76,7 @@ describe('Strategy', () => {
             }
           });
         })
-        .authenticate();
+        .authenticate({unsafeFallbackToQueryString: true});
     });
 
     it('should supply user', () => {

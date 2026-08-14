@@ -2,7 +2,11 @@
 
 This changelog follows Semantic Versioning https://semver.org/
 
-## 2.2.0 (2026-08-14)
+## 3.0.0 (2026-08-14)
+
+### Major
+
+- feat: require `fallbackToQueryString` option if falling back
 
 ### Minor
 

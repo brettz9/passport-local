@@ -46,6 +46,10 @@ export type DefaultStrategyOptions = StrategyOptions & {
 };
 export type AuthenticateOptions = {
     badRequestMessage?: string | undefined;
+    /**
+     * Defaults to `false`
+     */
+    unsafeFallbackToQueryString?: boolean | undefined;
 };
 /** @typedef {import('@passport-next/passport-types').User} User */
 /**
@@ -127,6 +131,7 @@ export type AuthenticateOptions = {
 /**
  * @typedef {object} AuthenticateOptions
  * @property {string} [badRequestMessage]
+ * @property {boolean} [unsafeFallbackToQueryString] Defaults to `false`
  */
 /**
  * `Strategy` constructor.
@@ -202,8 +207,8 @@ declare class Strategy extends passport.EnhancedStrategy {
      * Authenticate request based on the contents of a form submission.
      *
      * @param {Request} req
-    * @param {AuthenticateOptions} [options]
-    * @public
+     * @param {AuthenticateOptions} [options]
+     * @public
      * @returns {Promise<void>}
      */
     public authenticate(req: Request, options?: AuthenticateOptions): Promise<void>;
