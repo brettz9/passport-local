@@ -1,27 +1,34 @@
 /* eslint-disable promise/prefer-await-to-callbacks --
  * Passport authentication exposes a callback API.
  */
-// @ts-expect-error -- Passport 3 does not publish TypeScript declarations.
-import passport from '@passport-next/passport';
+import {Passport} from '@passport-next/passport';
 import LocalStrategy from '@passport-next/passport-local';
 import {expect} from './bootstrap/node.js';
 
-/**
- * @callback Middleware
- * @param {object} req
- * @param {object} res
- * @param {(err?: Error) => void} next
- * @returns {void}
- */
+/** @import {ConnectMiddleware} from '@passport-next/passport' */
+/** @import {ConnectRequest} from '@passport-next/http-types' */
 
 /**
- * @param {Middleware} middleware
- * @param {object} req
+ * @returns {import('@passport-next/http-types').ConnectResponse}
+ */
+const createResponse = () => ({
+  statusCode: 200,
+  setHeader () {
+    return undefined;
+  },
+  end () {
+    return undefined;
+  }
+});
+
+/**
+ * @param {ConnectMiddleware} middleware
+ * @param {ConnectRequest} req
  * @returns {Promise<void>}
  */
 // eslint-disable-next-line promise/avoid-new -- Adapt callback middleware.
 const runMiddleware = (middleware, req) => new Promise((resolve, reject) => {
-  middleware(req, {}, (err) => {
+  middleware(req, createResponse(), (err) => {
     if (err) {
       reject(err);
       return;
@@ -32,7 +39,7 @@ const runMiddleware = (middleware, req) => new Promise((resolve, reject) => {
 
 describe('@passport-next/passport integration', () => {
   it('should authenticate with @passport-next/passport-local', (done) => {
-    const authenticator = new passport.Passport();
+    const authenticator = new Passport();
     authenticator.use(new LocalStrategy((username, password, verified) => {
       if (username === 'johndoe' && password === 'secret') {
         verified(null, {id: '1234'}, {scope: 'read'});
@@ -46,8 +53,8 @@ describe('@passport-next/passport integration', () => {
       {session: false},
       /**
        * @param {Error | null} err
-       * @param {{id: string} | false} user
-       * @param {{scope: string}} info
+       * @param {import('@passport-next/passport-types').User | false} [user]
+       * @param {unknown} [info]
        * @returns {void}
        */
       (err, user, info) => {
@@ -62,14 +69,16 @@ describe('@passport-next/passport integration', () => {
       }
     );
 
-    authenticate({
+    const request = {
+      headers: {},
       body: {username: 'johndoe', password: 'secret'},
       query: {}
-    }, {}, done);
+    };
+    authenticate(request, createResponse(), done);
   });
 
   it('should persist and restore an authenticated session', async () => {
-    const authenticator = new passport.Passport();
+    const authenticator = new Passport();
 
     // LocalStrategy verifies credentials and supplies the full application
     // user.
@@ -82,32 +91,19 @@ describe('@passport-next/passport integration', () => {
     }));
 
     // Passport stores only the serialized ID rather than the full user object.
-    authenticator.serializeUser(
-      /**
-       * @param {{id: string}} user
-       * @param {(err: null, userId: string) => void} serialized
-       * @returns {void}
-       */
-      (user, serialized) => {
-        serialized(null, user.id);
-      }
-    );
+    authenticator.serializeUser((_request, user) => {
+      return /** @type {{id: string}} */ (user).id;
+    });
 
     // A later request uses that ID to recover the full application user.
-    authenticator.deserializeUser(
-      /**
-       * @param {string} id
-       * @param {(err: null, user: object) => void} deserialized
-       * @returns {void}
-       */
-      (id, deserialized) => {
-        deserialized(null, {id, username: 'johndoe'});
-      }
-    );
+    authenticator.deserializeUser((_request, id) => {
+      return {id, username: 'johndoe'};
+    });
 
     /** @type {{passport?: {user: string}}} */
     const session = {};
     const loginRequest = {
+      headers: {},
       body: {username: 'johndoe', password: 'secret'},
       query: {},
       session
@@ -120,8 +116,14 @@ describe('@passport-next/passport integration', () => {
 
     expect(session).to.deep.equal({passport: {user: '1234'}});
 
-    /** @type {{session: typeof session, user?: object}} */
-    const restoredRequest = {session};
+    /**
+     * @type {{
+     *   headers: import('@passport-next/http-types').ConnectRequest['headers'],
+     *   session: typeof session,
+     *   user?: object
+     * }}
+     */
+    const restoredRequest = {headers: {}, session};
 
     // Simulate a subsequent request carrying the same session. session()
     // deserializes its stored ID and assigns the recovered user to req.user.
